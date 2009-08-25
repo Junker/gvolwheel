@@ -1,6 +1,8 @@
 .tm_project*
 .libs
 .deps
+.anjuta
+autom4te.cache
 .*swp
 .nautilus-metafile.xml
 *.autosave
@@ -14,6 +16,8 @@
 *.o
 *.class
 *.pyc
+*.gz
+.anjuta_sym_db.db
 aclocal.m4
 autom4te.cache
 config.h

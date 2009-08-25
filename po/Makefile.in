@@ -30,7 +30,7 @@ top_builddir = ..
 
 prefix = /usr/local
 exec_prefix = ${prefix}
-datadir = /usr/share
+datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 libdir = ${exec_prefix}/lib
 DATADIRNAME = share
