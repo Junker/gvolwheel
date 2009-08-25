@@ -1,0 +1,12 @@
+Pixmaps:
+($prefix)/share/pixmaps/gvolwheel/audio-volume-low.png
+($prefix)/share/pixmaps/gvolwheel/audio-volume-medium.png
+($prefix)/share/pixmaps/gvolwheel/audio-volume-high.png
+($prefix)/share/pixmaps/gvolwheel/audio-volume-muted.png
+
+You can change it. Just replace pixmaps from any theme. (default icons path: /usr/share/icons/$theme/24x24/status/)
+
+For use gtk theme icons, open "Preferences" and change "Use gnome icons", and restart gvolwheel  
+
+---
+Dmitry Kosenkov <junker@front.ru>
