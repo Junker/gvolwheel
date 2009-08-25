@@ -136,8 +136,10 @@ void on_config_window_save(GtkButton *button,gpointer user_data)
 	opt_incr = gtk_spin_button_get_value_as_int (confwin_spin_incr);
 	opt_gnome_icons = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(confwin_gnome_icons));
 	opt_show_tooltip = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(confwin_show_tooltip));
-	if (!opt_show_tooltip) 	gtk_widget_set_tooltip_text(GTK_WIDGET(tray_box),"");
+	if (!opt_gnome_icons) LoadPixbufs();
+	if (!opt_show_tooltip) gtk_widget_set_tooltip_text(GTK_WIDGET(tray_box),"");
 	save_config ();
+	update_tray_image();
 	gtk_widget_destroy(GTK_WIDGET(confwin));
 }
 

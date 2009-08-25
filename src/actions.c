@@ -128,16 +128,17 @@ void update_tray_image()
 	gint vol = vol_get();
 	gchar volchar[5]; 
 	GdkPixbuf *tmp_pixbuf;
-	if (gtk_image_get_storage_type(tray_image) == GTK_IMAGE_PIXBUF) {
-		tmp_pixbuf=gtk_image_get_pixbuf (tray_image);
+	if (!opt_gnome_icons)
+	{	
+		if (gtk_image_get_storage_type(tray_image) == GTK_IMAGE_PIXBUF) tmp_pixbuf=gtk_image_get_pixbuf (tray_image);
 		if (vol>0 && vol<=33 && tmp_pixbuf!=tray_pixbufs[1])  gtk_image_set_from_pixbuf (tray_image,tray_pixbufs[1]);
     	if (vol>33 && vol<=66 && tmp_pixbuf!=tray_pixbufs[2] ) gtk_image_set_from_pixbuf (tray_image,tray_pixbufs[2]);
     	if (vol>66 && vol<=100 && tmp_pixbuf!=tray_pixbufs[3]) gtk_image_set_from_pixbuf (tray_image,tray_pixbufs[3]);
     	if (vol==0 && tmp_pixbuf!=tray_pixbufs[0]) gtk_image_set_from_pixbuf (tray_image,tray_pixbufs[0]);
 	}
-	else if (gtk_image_get_storage_type(tray_image) == GTK_IMAGE_ICON_NAME) {
-		gchar *icon_name;
-		gtk_image_get_icon_name(tray_image,&icon_name,NULL);
+	else {
+		gchar icon_name[50];
+		if (gtk_image_get_storage_type(tray_image) == GTK_IMAGE_STOCK) gtk_image_get_icon_name(tray_image,&icon_name,NULL);
 		if (vol>0 && vol<=33 && strcmp(icon_name,tray_image_stocks[1])!=0) gtk_image_set_from_icon_name (tray_image,tray_image_stocks[1],GTK_ICON_SIZE_BUTTON);
     	if (vol>33 && vol<=66 && strcmp(icon_name,tray_image_stocks[2])!=0) gtk_image_set_from_icon_name (tray_image,tray_image_stocks[2],GTK_ICON_SIZE_BUTTON);
    		if (vol>66 && vol<=100 && strcmp(icon_name,tray_image_stocks[3])!=0) gtk_image_set_from_icon_name (tray_image,tray_image_stocks[3],GTK_ICON_SIZE_BUTTON);
@@ -199,9 +200,8 @@ void vol_window_close()
 void load_config ()
 {
 	gchar *config_filename;
-	config_filename = g_build_filename(getenv("HOME"),".config",GETTEXT_PACKAGE,"gvolwheel.conf",NULL);
+	config_filename = g_build_filename(getenv("HOME"),".config",PACKAGE_NAME,"gvolwheel.conf",NULL);
 	GKeyFile *config = g_key_file_new();
-	g_printf("%s\n",config_filename);
 		
 	if (g_key_file_load_from_file(config,config_filename,G_KEY_FILE_NONE,NULL) == FALSE) return;	
 	opt_channel = g_key_file_get_integer(config,"Options","Channel",NULL);
