@@ -57,12 +57,13 @@
 #include "actions.h"
 #include "callbacks.h"
  
-extern gboolean opt_gnome_icons; 
+extern gboolean opt_gnome_icons,opt_show_tooltip; 
 int mixer_fd;
 EggTrayIcon *egg_tray_icon; 
 GdkPixbuf *tray_pixbufs[4]; 
 GtkImage *tray_image;
 GtkEventBox *tray_box;
+
 const char *tray_image_stocks[] = {
 	 "audio-volume-muted",
 	 "audio-volume-low",
@@ -70,7 +71,12 @@ const char *tray_image_stocks[] = {
 	 "audio-volume-high"
  	 };
 
-
+static gchar *device = "/dev/mixer"; 
+static GOptionEntry entries[] =
+{
+	{ "device", 'd', 0, G_OPTION_ARG_STRING, &device, "Mixer device (default: /dev/mixer)", "N" },
+	{NULL}
+};
  
 
 static EggTrayIcon *create_egg_tray_icon() 
@@ -108,9 +114,20 @@ int main (int argc, char *argv[])
 	gtk_set_locale ();
 	gtk_init (&argc, &argv);
 	
-	mixer_fd = open ("/dev/mixer", R_OK+W_OK, 0);
+	GError *error = NULL;
+	GOptionContext *context;
+	context = g_option_context_new ("- tray icon audio volume mixer");
+	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
+	if (!g_option_context_parse (context, &argc, &argv, &error))
+	{
+		g_print ("option parsing failed: %s\n", error->message);
+		exit (1);
+	}
+
+	mixer_fd = open (device, R_OK+W_OK, 0);
   	if (mixer_fd < 0)
-    	g_printf ("Error opening mixer device\n"), exit (1);
+    	g_printf ("Error opening mixer device %s\n",device), exit (1);
 	
 	load_config ();
 	egg_tray_icon = create_egg_tray_icon();
