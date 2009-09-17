@@ -124,6 +124,7 @@ int main (int argc, char *argv[])
 		g_print ("option parsing failed: %s\n", error->message);
 		exit (1);
 	}
+	g_option_context_free(context);
 
 	mixer_fd = open (device, R_OK+W_OK, 0);
   	if (mixer_fd < 0)

@@ -1,2 +1,4 @@
+2009-09-17 version 0.5 
 
-
+	* add program arguments. for example: gvolwheel --device=/dev/mixer2 
+	* add some localization. 

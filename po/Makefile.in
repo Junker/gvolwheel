@@ -19,7 +19,7 @@
 
 GETTEXT_PACKAGE = gvolwheel
 PACKAGE = gvolwheel
-VERSION = 0.4
+VERSION = 0.5
 
 SHELL = /bin/sh
 
