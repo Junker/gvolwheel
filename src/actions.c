@@ -116,8 +116,16 @@ void LoadPixbufs()
 	int i;
 	gchar *pixmap_path=g_build_filename(PACKAGE_DATA_DIR,"pixmaps",PACKAGE_NAME,NULL); 
 	for (i=0;i<4;i++) {
-		tmp_image=GTK_IMAGE(gtk_image_new_from_file(g_strconcat(pixmap_path,"/",tray_image_stocks[i],".png",NULL)));
+		gchar *image_filename_local = g_strconcat(g_build_filename(getenv("HOME"),".config",PACKAGE_NAME,"pixmaps",tray_image_stocks[i],NULL),".png",NULL);
+		gchar *image_filename = g_strconcat(g_build_filename(pixmap_path,tray_image_stocks[i],NULL),".png",NULL);
+
+		if (g_file_test(image_filename_local,G_FILE_TEST_EXISTS)) tmp_image=GTK_IMAGE(gtk_image_new_from_file(image_filename_local));
+		else tmp_image=GTK_IMAGE(gtk_image_new_from_file(image_filename));	
+
 		tray_pixbufs[i]=gtk_image_get_pixbuf (tmp_image);
+
+		g_free(image_filename_local);
+		g_free(image_filename);
 	}
 	g_free(pixmap_path);
 
