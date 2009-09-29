@@ -1,3 +1,8 @@
+2009-09-29 version 0.6 
+
+	* can put your own pixmaps to: ~/.config/
+	* add some localization. 
+	
 2009-09-17 version 0.5 
 
 	* add program arguments. for example: gvolwheel --device=/dev/mixer2 
