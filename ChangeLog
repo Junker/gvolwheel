@@ -1,7 +1,7 @@
 2009-09-29 version 0.6 
 
-	* can put your own pixmaps to: ~/.config/
-	* add some localization. 
+	* can put your own pixmaps to: ~/.config/gvolwheel/pixmaps
+	* fixed trayicon bug, when panel restart.
 	
 2009-09-17 version 0.5 
 
