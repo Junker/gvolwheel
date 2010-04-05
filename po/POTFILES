@@ -1,1 +1,3 @@
-	../src/main.c
+	../src/main.c \
+	../src/actions.c \
+	../src/callbacks.c

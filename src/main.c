@@ -29,6 +29,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
+#include <glib/gi18n-lib.h>
 
 
 /*
@@ -127,9 +128,9 @@ int main (int argc, char *argv[])
 {
 
 #ifdef ENABLE_NLS
-//	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-//	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-//	textdomain (GETTEXT_PACKAGE);
+	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
 #endif
 
 	gtk_set_locale ();
@@ -144,7 +145,7 @@ int main (int argc, char *argv[])
 
 	if (!g_option_context_parse (context, &argc, &argv, &error))
 	{
-		g_print ("option parsing failed: %s\n", error->message);
+		g_print (_("option parsing failed: %s\n"), error->message);
 		exit (1);
 	}
 	g_option_context_free(context);
@@ -152,11 +153,12 @@ int main (int argc, char *argv[])
 	
 	mixer_fd = open (device, R_OK+W_OK, 0);
   	if (mixer_fd < 0)
-    	g_printf ("Error opening mixer device %s\n",device), exit (1);
+    	g_printf (_("Error opening mixer device %s\n"),device), exit (1);
 	
 	load_config ();
 	egg_tray_icon = create_egg_tray_icon();
-	
+
+	g_timeout_add (1000,(GSourceFunc) on_timer, NULL); //For update icon, if volume changed from other app
 	gtk_main ();
 
 	close(mixer_fd);

@@ -23,8 +23,10 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
-
 #include <config.h>
+#include <glib/gi18n-lib.h>
+
+
 
 #include "callbacks.h"
 #include "actions.h"
@@ -85,25 +87,25 @@ void on_mconfig_click (GtkMenuItem *menuitem)
 	
 	confwin_entry_mixer = GTK_ENTRY(gtk_entry_new ());
 	gtk_entry_set_text (confwin_entry_mixer,opt_mixer);
-	gtk_box_pack_start (GTK_BOX(hbox2),GTK_WIDGET(gtk_label_new("Default mixer")),0,0,5);
+	gtk_box_pack_start (GTK_BOX(hbox2),GTK_WIDGET(gtk_label_new(_("Default mixer"))),0,0,5);
 	gtk_box_pack_end (GTK_BOX(hbox2),GTK_WIDGET(confwin_entry_mixer),0,0,5);	
 	gtk_box_pack_start (GTK_BOX(vbox),GTK_WIDGET(hbox2),0,0,0);
 		
 	GtkHBox *hbox3 = GTK_HBOX(gtk_hbox_new (0,2)); 
 	confwin_spin_incr = GTK_SPIN_BUTTON(gtk_spin_button_new_with_range (1, 99, 1));
 	gtk_spin_button_set_value (confwin_spin_incr,opt_incr);
-	gtk_box_pack_start (GTK_BOX(hbox3),GTK_WIDGET(gtk_label_new("Volume incrementation")),0,0,5);
+	gtk_box_pack_start (GTK_BOX(hbox3),GTK_WIDGET(gtk_label_new(_("Volume incrementation"))),0,0,5);
 	gtk_box_pack_end (GTK_BOX(hbox3),GTK_WIDGET(confwin_spin_incr),0,0,5);										
 	gtk_box_pack_start (GTK_BOX(vbox),GTK_WIDGET(hbox3),0,0,0);
 
 	GtkHBox *hbox4 = GTK_HBOX(gtk_hbox_new (0,2)); 
-	confwin_gnome_icons = GTK_CHECK_BUTTON(gtk_check_button_new_with_label ("Use Gnome Icons"));
+	confwin_gnome_icons = GTK_CHECK_BUTTON(gtk_check_button_new_with_label (_("Use Gnome Icons")));
 	gtk_toggle_button_set_active  (GTK_TOGGLE_BUTTON(confwin_gnome_icons),opt_gnome_icons);
 	gtk_box_pack_end (GTK_BOX(hbox4),GTK_WIDGET(confwin_gnome_icons),0,0,5);										
 	gtk_box_pack_start (GTK_BOX(vbox),GTK_WIDGET(hbox4),0,0,0);
 	
 	GtkHBox *hbox5 = GTK_HBOX(gtk_hbox_new (0,2)); 
-	confwin_show_tooltip = GTK_CHECK_BUTTON(gtk_check_button_new_with_label ("Show tooltip"));
+	confwin_show_tooltip = GTK_CHECK_BUTTON(gtk_check_button_new_with_label (_("Show tooltip")));
 	gtk_toggle_button_set_active  (GTK_TOGGLE_BUTTON(confwin_show_tooltip),opt_show_tooltip);
 	gtk_box_pack_end (GTK_BOX(hbox5),GTK_WIDGET(confwin_show_tooltip),0,0,5);										
 	gtk_box_pack_start (GTK_BOX(vbox),GTK_WIDGET(hbox5),0,0,0);
@@ -161,3 +163,7 @@ void on_tray_icon_press(GtkWidget *widget,GdkEventButton *event,gpointer user_da
 	if (event->button == 1 && event->type == GDK_2BUTTON_PRESS) launch_mixer();
 }
 
+gboolean on_timer(gpointer data)
+{
+	 update_tray_image();
+}

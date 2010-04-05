@@ -22,8 +22,10 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
-
 #include <config.h>
+#include <glib/gi18n-lib.h>
+
+
 
 #include "actions.h"
 #include "callbacks.h"
@@ -172,7 +174,7 @@ void vol_window_show ()
 	
 	GtkVBox *vbox = GTK_VBOX(gtk_vbox_new (0,4));
 	
-	GtkButton *btn = GTK_BUTTON(gtk_button_new_with_label ("Mixer"));
+	GtkButton *btn = GTK_BUTTON(gtk_button_new_with_label (_("Mixer")));
 	g_signal_connect(G_OBJECT(btn),"clicked",G_CALLBACK(launch_mixer),NULL);
 	
 	gtk_box_pack_start (GTK_BOX(vbox),GTK_WIDGET(btn),0,0,0);
