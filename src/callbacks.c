@@ -56,7 +56,7 @@ void on_mabout_click (GtkMenuItem *menuitem)
 	GtkAboutDialog *dlg = GTK_ABOUT_DIALOG(gtk_about_dialog_new ());
 	gtk_about_dialog_set_program_name(dlg,"GVolWheel");
 	gtk_about_dialog_set_version (dlg,VERSION);
-	gtk_about_dialog_set_copyright (dlg,"Copyright (c) Dmitry Kosenkov 2008");
+	gtk_about_dialog_set_copyright (dlg,"Copyright (c) Dmitry Kosenkov 2010");
 	gtk_about_dialog_set_website (dlg,"http://sourceforge.net/projects/gvolwheel/");
 	gtk_about_dialog_set_comments (dlg,	"Volume mixer"); 
 	gtk_dialog_run (GTK_DIALOG (dlg));

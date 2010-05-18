@@ -215,7 +215,7 @@ void load_config ()
 		
 	if (g_key_file_load_from_file(config,config_filename,G_KEY_FILE_NONE,NULL) == FALSE) return;	
 	opt_channel = g_key_file_get_integer(config,"Options","Channel",NULL);
-	strcpy(opt_mixer,g_ascii_strdown(g_key_file_get_string(config,"Options","Mixer",NULL),-1));
+	strcpy(opt_mixer,g_key_file_get_string(config,"Options","Mixer",NULL));
 	opt_incr = g_key_file_get_integer(config,"Options","Incr",NULL);
 	opt_gnome_icons = g_key_file_get_boolean(config,"Options","Gnome_Icons",NULL);	
 	opt_show_tooltip = g_key_file_get_boolean(config,"Options","Show_Tooltip",NULL);	
@@ -234,7 +234,7 @@ void save_config()
 	g_mkdir(strcat(getenv("HOME"),"/.config/gvolwheel"),0755);
 	
 	g_key_file_set_integer(config,"Options","Channel",opt_channel);	  
-	g_key_file_set_string(config,"Options","Mixer",g_ascii_strdown(opt_mixer,-1));	  
+	g_key_file_set_string(config,"Options","Mixer",opt_mixer);	  
 	g_key_file_set_integer(config,"Options","Incr",opt_incr);	
 	g_key_file_set_boolean(config,"Options","Gnome_Icons",opt_gnome_icons);	
 	g_key_file_set_boolean(config,"Options","Show_Tooltip",opt_show_tooltip);	
