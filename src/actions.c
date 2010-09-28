@@ -170,6 +170,10 @@ void vol_window_show ()
 	gtk_container_set_border_width(GTK_CONTAINER(vwin),5);
 	gtk_window_set_decorated (vwin,FALSE);
 	gtk_window_set_position (vwin,GTK_WIN_POS_MOUSE);
+	gtk_window_set_skip_taskbar_hint(vwin,TRUE);
+	gtk_window_set_skip_pager_hint (vwin,TRUE);
+	                                
+		
 	g_signal_connect(G_OBJECT(vwin),"focus-out-event",G_CALLBACK(vol_window_close),NULL);
 	
 	GtkVBox *vbox = GTK_VBOX(gtk_vbox_new (0,4));

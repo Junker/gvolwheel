@@ -155,6 +155,11 @@ void on_tray_icon_scroll (GtkWidget *widget,GdkEventScroll *event,gpointer user_
 void on_tray_icon_click(GtkWidget *widget,GdkEventButton *event,gpointer user_data)
 {
 	if (event->button == 3) tray_icon_menu_show();
+	if (event->button == 2) 
+	{
+		vol_mute();
+		update_tray_image();
+	}
 }
 
 void on_tray_icon_press(GtkWidget *widget,GdkEventButton *event,gpointer user_data)
