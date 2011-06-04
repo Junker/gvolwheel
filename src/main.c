@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * main.c
- * Copyright (C) Dmitry Kosenkov 2008 <junker@front.ru>
+ * Copyright (C) Dmitry Kosenkov 2011 <junker@front.ru>
  * 
  * main.c is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -54,26 +54,11 @@
 #  define N_(String) (String)
 #endif
 
-
-#include "eggtrayicon.h"
+#include "trayicon.h"
+#include "conf.h"
 #include "actions.h"
 #include "callbacks.h"
- 
-extern gboolean opt_gnome_icons,opt_show_tooltip; 
-int mixer_fd;
-EggTrayIcon *egg_tray_icon; 
-GdkPixbuf *tray_pixbufs[4]; 
-GtkImage *tray_image;
-GtkEventBox *tray_box;
-
-static EggTrayIcon *create_egg_tray_icon();
-
-const char *tray_image_stocks[] = {
-	 "audio-volume-muted",
-	 "audio-volume-low",
-	 "audio-volume-medium",
-	 "audio-volume-high"
- 	 };
+#include "volume.h"
 
 static gchar *device = "/dev/mixer"; 
 static GOptionEntry entries[] =
@@ -84,46 +69,6 @@ static GOptionEntry entries[] =
 
 
 
-static gboolean egg_tray_icon_recreate(gpointer data)
-{
-	egg_tray_icon = create_egg_tray_icon();
-	return FALSE; 
-}
-
-static void on_egg_tray_icon_destroyed(GtkWidget *widget, void *data)
-{
-	g_object_unref(G_OBJECT(egg_tray_icon));
-	egg_tray_icon = NULL;
-
-	g_idle_add(egg_tray_icon_recreate, NULL);
-}
-
-static EggTrayIcon *create_egg_tray_icon() 
-{
-	tray_box = GTK_EVENT_BOX(gtk_event_box_new());
-	if (opt_gnome_icons==TRUE)
-		tray_image = GTK_IMAGE(gtk_image_new_from_icon_name (tray_image_stocks[1],GTK_ICON_SIZE_BUTTON));
-	else LoadPixbufs(), tray_image = gtk_image_new_from_pixbuf (tray_pixbufs[2]);
-	
-	egg_tray_icon = egg_tray_icon_new("GVolwheel");
-	gtk_container_add(GTK_CONTAINER(tray_box),GTK_WIDGET(tray_image));
-	gtk_container_add(GTK_CONTAINER(egg_tray_icon), GTK_WIDGET(tray_box));	
-
-	update_tray_image();
-
-	g_signal_connect(G_OBJECT(tray_box),"button-release-event",G_CALLBACK(on_tray_icon_click), NULL);
-	g_signal_connect(G_OBJECT(tray_box),"button-press-event",G_CALLBACK(on_tray_icon_press), NULL);
-	g_signal_connect(G_OBJECT(tray_box),"scroll-event",G_CALLBACK(on_tray_icon_scroll), NULL);
-	g_signal_connect(G_OBJECT(egg_tray_icon), "destroy", G_CALLBACK(on_egg_tray_icon_destroyed), NULL);
-
-	g_object_ref(G_OBJECT(egg_tray_icon));
-	
-	gtk_widget_show_all (GTK_WIDGET(egg_tray_icon));
-
-
-	return egg_tray_icon;
-}
-
 int main (int argc, char *argv[])
 {
 
@@ -133,7 +78,7 @@ int main (int argc, char *argv[])
 	textdomain (GETTEXT_PACKAGE);
 #endif
 
-	gtk_set_locale ();
+//gtk3	gtk_set_locale ();
 	gtk_init (&argc, &argv);
 	
 	GError *error = NULL;
@@ -154,9 +99,15 @@ int main (int argc, char *argv[])
 	mixer_fd = open (device, R_OK+W_OK, 0);
   	if (mixer_fd < 0)
     	g_printf (_("Error opening mixer device %s\n"),device), exit (1);
+
+	strcpy(opt_mixer, "gnome-alsamixer");
+	opt_channel = OPT_CHANNEL_MASTER;
+	opt_incr = 3;
+	opt_gnome_icons = FALSE;
+	opt_show_tooltip = FALSE; 
 	
 	load_config ();
-	egg_tray_icon = create_egg_tray_icon();
+	tray_icon = create_tray_icon();
 
 	g_timeout_add (1000,(GSourceFunc) on_timer, NULL); //For update icon, if volume changed from other app
 	gtk_main ();

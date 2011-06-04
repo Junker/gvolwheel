@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(gvolwheel, 0.8, http://gvolwheel.sourceforge.net/)
+AC_INIT(gvolwheel, 0.9, http://gvolwheel.sourceforge.net/, , http://gvolwheel.sourceforge.net/)
 
 AC_SUBST(PACKAGE_DATA_DIR)
 
@@ -35,7 +35,8 @@ AM_PROG_LIBTOOL
 
 
 
-PKG_CHECK_MODULES(GVOLWHEEL, [gtk+-2.0 >= 2.8])
+PKG_CHECK_MODULES(GTK,gtk+-3.0)
+
 AC_SUBST(GVOLWHEEL_CFLAGS)
 AC_SUBST(GVOLWHEEL_LIBS)
 

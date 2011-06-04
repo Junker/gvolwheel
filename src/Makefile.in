@@ -47,8 +47,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_gvolwheel_OBJECTS = main.$(OBJEXT) eggtrayicon.$(OBJEXT) \
-	actions.$(OBJEXT) callbacks.$(OBJEXT)
+am_gvolwheel_OBJECTS = main.$(OBJEXT) actions.$(OBJEXT) \
+	callbacks.$(OBJEXT) conf.$(OBJEXT) trayicon.$(OBJEXT) \
+	volume.$(OBJEXT) configwindow.$(OBJEXT)
 gvolwheel_OBJECTS = $(am_gvolwheel_OBJECTS)
 am__DEPENDENCIES_1 =
 gvolwheel_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -92,6 +93,7 @@ CYGPATH_W = @CYGPATH_W@
 DATADIRNAME = @DATADIRNAME@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DLLTOOL = @DLLTOOL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -104,6 +106,8 @@ GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GMOFILES = @GMOFILES@
 GMSGFMT = @GMSGFMT@
 GREP = @GREP@
+GTK_CFLAGS = @GTK_CFLAGS@
+GTK_LIBS = @GTK_LIBS@
 GVOLWHEEL_CFLAGS = @GVOLWHEEL_CFLAGS@
 GVOLWHEEL_LIBS = @GVOLWHEEL_LIBS@
 INSTALL = @INSTALL@
@@ -127,6 +131,7 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
+MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
 MKINSTALLDIRS = @MKINSTALLDIRS@
 MSGFMT = @MSGFMT@
@@ -167,6 +172,7 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
 am__include = @am__include@
@@ -219,7 +225,7 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	$(GVOLWHEEL_CFLAGS)
+	$(GTK_CFLAGS)
 
 AM_CFLAGS = \
 	 -Wall\
@@ -227,17 +233,23 @@ AM_CFLAGS = \
 
 gvolwheel_SOURCES = \
 	main.c \
-	eggtrayicon.c \
-	eggtrayicon.h \
 	actions.c \
 	actions.h \
 	callbacks.c \
-	callbacks.h
+	callbacks.h \
+	trayicon.h \
+	conf.c \
+	conf.h \
+	trayicon.c \
+	volume.c \
+	volume.h \
+	configwindow.c \
+	configwindow.h
 
 gvolwheel_LDFLAGS = \
 	-Wl,--export-dynamic
 
-gvolwheel_LDADD = $(GVOLWHEEL_LIBS)
+gvolwheel_LDADD = $(GTK_LIBS)
 EXTRA_DIST = $(glade_DATA)
 all: all-am
 
@@ -328,8 +340,11 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/actions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/callbacks.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eggtrayicon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conf.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/configwindow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/trayicon.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/volume.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

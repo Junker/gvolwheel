@@ -1,3 +1,8 @@
+2010-04-05 version 0.7 
+
+	* Full localization. You can send me translated .po files.
+	* now tray icon will update, when volume changed from other aplication
+
 2009-09-29 version 0.6 
 
 	* can put your own pixmaps to: ~/.config/gvolwheel/pixmaps
