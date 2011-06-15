@@ -28,9 +28,6 @@
 #include "configwindow.h"
 
  
-
-
-	 
 void on_vol_value_change (GtkRange *range, GtkScrollType step, gpointer user_data)
 {
 	vol_set(gtk_range_get_value (range));
@@ -48,7 +45,7 @@ void on_mabout_click (GtkMenuItem *menuitem)
 	GtkAboutDialog *dlg = GTK_ABOUT_DIALOG(gtk_about_dialog_new ());
 	gtk_about_dialog_set_program_name(dlg, "GVolWheel");
 	gtk_about_dialog_set_version (dlg,VERSION);
-	gtk_about_dialog_set_copyright (dlg, "Copyright (c) Dmitry Kosenkov 2010");
+	gtk_about_dialog_set_copyright (dlg, "Copyright (c) Dmitry Kosenkov 2011");
 	gtk_about_dialog_set_website (dlg, PACKAGE_URL);
 	gtk_about_dialog_set_comments (dlg,	"Volume mixer"); 
 	gtk_dialog_run (GTK_DIALOG (dlg));
@@ -59,6 +56,4 @@ void on_mabout_click (GtkMenuItem *menuitem)
 void on_timer(gpointer data)
 {
 	update_tray_image();
-
-	
 }

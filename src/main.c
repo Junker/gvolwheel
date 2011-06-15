@@ -109,9 +109,18 @@ int main (int argc, char *argv[])
 	load_config ();
 	tray_icon = create_tray_icon();
 
-	g_timeout_add (1000,(GSourceFunc) on_timer, NULL); //For update icon, if volume changed from other app
+  g_timeout_add (1000, (GSourceFunc) on_timer, NULL); //For update icon, if volume changed from other app
+
+/*	GIOChannel* pChannel = g_io_channel_unix_new(mixer_fd);
+	g_assert(pChannel);
+
+	g_io_add_watch(pChannel, G_IO_IN, read_callback, NULL);
+*/
+	
 	gtk_main ();
 
 	close(mixer_fd);
 	return 0;
 }
+
+
