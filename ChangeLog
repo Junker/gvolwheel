@@ -1,3 +1,8 @@
+2012-04-07 version 1.0 
+	* full support ALSA by default.
+	* audio backend select (ALSA, OSS).
+	* fixed bugs.
+
 2010-04-05 version 0.7 
 
 	* Full localization. You can send me translated .po files.

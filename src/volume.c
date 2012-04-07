@@ -27,9 +27,9 @@
 	#include "oss.h"
 #endif
 
-int vol_init()
+int vol_init(char *device)
 {
-	return vol_backend_init();
+	return vol_backend_init(device);
 }
 
 void vol_up () 
@@ -49,7 +49,8 @@ void vol_mute ()
 
 void vol_set (int value)
 {
-	if (value < 0) value=0;
+	if (value < 0) value = 0;
+	if (value > 100) value = 100;
 	vol_backend_set(opt_channel, value);
 }
 

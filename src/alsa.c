@@ -1,7 +1,7 @@
 /*
  * alsa.c
  *
- * Copyright (C) 2012 - root
+ * Copyright (C) 2012 - Dmitry Kosenkov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,42 +21,50 @@
 
 #include "alsa.h"
 
-static char *device = "default"; 
+static char *default_device = "default"; 
 
 static snd_mixer_t * mixer_id = NULL;
 snd_mixer_selem_id_t *sid;
 
-int vol_backend_init ()
+int vol_backend_init (char *device)
 {
 	snd_mixer_open(&mixer_id, 0);
-	snd_mixer_attach(mixer_id, device);
+	snd_mixer_attach(mixer_id, device ? device : default_device);
 	snd_mixer_selem_register(mixer_id, NULL, NULL);
 	snd_mixer_load(mixer_id);
 
-	snd_mixer_selem_id_alloca(&sid);
-    snd_mixer_selem_id_set_index(sid, 0);
-    
+	snd_mixer_selem_id_malloc(&sid);
+
+	snd_mixer_selem_id_set_name(sid, "Master");
+	snd_mixer_elem_t* elem = snd_mixer_find_selem(mixer_id, sid);
+	if (!elem) return 0;
+
+	snd_mixer_selem_id_set_name(sid, "PCM");
+	elem = snd_mixer_find_selem(mixer_id, sid);
+	if (!elem) return 0;
+	
 	return 1;
 }
 
 int vol_backend_get(int mixer)
 {
-	snd_mixer_selem_id_set_name(sid, mixer == 1 ? "Master" : "PCM");
-    snd_mixer_elem_t* elem = snd_mixer_find_selem(mixer_id, sid);
+	snd_mixer_handle_events(mixer_id);
+	snd_mixer_selem_id_set_name(sid, mixer == 0 ? "Master" : "PCM");
+	snd_mixer_elem_t* elem = snd_mixer_find_selem(mixer_id, sid);
 
-	long pmin, pmax, value;
-	snd_mixer_selem_get_playback_volume_range(elem, &pmin, &pmax);
-	snd_mixer_selem_get_playback_volume(elem, 0, &value);
-	return 100 * value / pmax;
+	long min, max, vol;
+	snd_mixer_selem_get_playback_volume_range(elem, &min, &max);
+	snd_mixer_selem_get_playback_volume(elem, 0, &vol);
+
+	return 100 * vol / max;
 }
 
 void vol_backend_set(int mixer, int value)
-{
-	snd_mixer_selem_id_set_name(sid, mixer == 1 ? "Master" : "PCM");
-    snd_mixer_elem_t* elem = snd_mixer_find_selem(mixer_id, sid);
+{	
+	snd_mixer_selem_id_set_name(sid, mixer == 0 ? "Master" : "PCM");
+	snd_mixer_elem_t* elem = snd_mixer_find_selem(mixer_id, sid);
 
-	long pmin, pmax;
-	snd_mixer_selem_get_playback_volume_range(elem, &pmin, &pmax);
-	long vol = pmax * value / 100;
-	snd_mixer_selem_set_playback_volume_all(elem, vol);
+	long min, max;
+	snd_mixer_selem_get_playback_volume_range(elem, &min, &max);
+	snd_mixer_selem_set_playback_volume_all(elem, max * value / 100);
 }

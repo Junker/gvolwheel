@@ -34,7 +34,7 @@ IT_PROG_INTLTOOL([0.35.0])
 AM_PROG_LIBTOOL
 
 AC_ARG_ENABLE([oss],
-  [  --disable-oss    disable OSS],
+  [  --enable-oss    enable OSS],
   [oss=${enableval}],
   [oss=no])
   

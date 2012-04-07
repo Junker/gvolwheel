@@ -1,3 +1,14 @@
+Install:
+./configure (for ALSA)
+  or
+./configure --enable-oss (for OSS)
+
+make
+
+make install
+
+
+
 Pixmaps:
 ($prefix)/share/pixmaps/gvolwheel/audio-volume-low.png
 ($prefix)/share/pixmaps/gvolwheel/audio-volume-medium.png

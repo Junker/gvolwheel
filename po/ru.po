@@ -24,8 +24,8 @@ msgstr ""
 
 #: ../src/main.c:157
 #, c-format
-msgid "Error opening mixer device %s\n"
-msgstr "Ошибка при открытии микшер-устройства %s\n"
+msgid "Error opening mixer device\n"
+msgstr "Ошибка при открытии микшер-устройства\n"
 
 #: ../src/actions.c:177
 msgid "Mixer"

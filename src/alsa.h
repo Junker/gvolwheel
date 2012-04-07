@@ -17,6 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-int vol_backend_init();
+int vol_backend_init(char *device);
 void vol_backend_set(int mixer, int value);
 int vol_backend_get(int mixer);

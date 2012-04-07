@@ -1,7 +1,7 @@
 /*
  * oss.h
  *
- * Copyright (C) 2012 - root
+ * Copyright (C) 2012 - Dmitry Kosenkov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-int mixer_fd;
-
 struct stereo_volume
 {
 	unsigned char left;
@@ -27,6 +25,6 @@ struct stereo_volume
 
 struct stereo_volume vol;
 
-int vol_backend_init();
+int vol_backend_init(char *device);
 void vol_backend_set(int mixer, int value);
 int vol_backend_get(int mixer);

@@ -1,7 +1,7 @@
 /*
  * oss.c
  *
- * Copyright (C) 2012 - root
+ * Copyright (C) 2012 - Dmitry Kosenkov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,13 @@
 
 #include "oss.h"
 
-static char *device = "/dev/mixer"; 
+static char *default_device = "/dev/mixer"; 
 
-int vol_backend_init ()
+int mixer_fd;
+
+int vol_backend_init (char *device)
 {
-	mixer_fd = open (device, R_OK+W_OK, 0);
+	mixer_fd = open (device ? device : default_device, R_OK+W_OK, 0);
   	if (mixer_fd < 0) return 0;
 	else return 1;
 

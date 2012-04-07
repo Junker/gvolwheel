@@ -60,10 +60,14 @@
 #include "callbacks.h"
 #include "volume.h"
 
-static gchar *device = "/dev/mixer"; 
+static gchar *device = NULL; 
 static GOptionEntry entries[] =
 {
+#ifdef BACKEND_ALSA
+	{ "device", 'd', 0, G_OPTION_ARG_STRING, &device, "Audio device name (e.g. hw:1)", "N" },
+#else
 	{ "device", 'd', 0, G_OPTION_ARG_STRING, &device, "Mixer device (default: /dev/mixer)", "N" },
+#endif
 	{NULL}
 };
 
@@ -97,7 +101,7 @@ int main (int argc, char *argv[])
 
 	
 
-	if (!vol_init()) g_printf (_("Error opening mixer device %s\n"), device), exit (1);
+	if (!vol_init(device)) g_printf (_("Error opening mixer device\n")), exit (1);
 	
 	strcpy(opt_mixer, "gnome-alsamixer");
 	opt_channel = OPT_CHANNEL_MASTER;
@@ -112,7 +116,6 @@ int main (int argc, char *argv[])
 	
 	gtk_main ();
 
-//	close(mixer_fd);
 	return 0;
 }
 

@@ -147,14 +147,14 @@ void update_tray_image()
     	if (vol==0 &&             tmp_pixbuf!=tray_pixbufs[0]) gtk_status_icon_set_from_pixbuf(tray_icon, tray_pixbufs[0]);
 	}
 	else {
-		const gchar *icon_name;
+		const gchar *icon_name = "";
 		if (gtk_status_icon_get_storage_type(tray_icon) == GTK_IMAGE_STOCK) icon_name = gtk_status_icon_get_icon_name(tray_icon);
 		if (vol>0  && vol<=33  && strcmp(icon_name, tray_image_stocks[1]) != 0) gtk_status_icon_set_from_icon_name(tray_icon, tray_image_stocks[1]);
     	if (vol>33 && vol<=66  && strcmp(icon_name, tray_image_stocks[2]) != 0) gtk_status_icon_set_from_icon_name(tray_icon, tray_image_stocks[2]);
    		if (vol>66 && vol<=100 && strcmp(icon_name, tray_image_stocks[3]) != 0) gtk_status_icon_set_from_icon_name(tray_icon, tray_image_stocks[3]);
     	if (vol==0 &&             strcmp(icon_name, tray_image_stocks[0]) != 0) gtk_status_icon_set_from_icon_name(tray_icon, tray_image_stocks[0]);
 	}
+
 	g_sprintf(volchar, "%i\%%", vol);
 	if (opt_show_tooltip) gtk_status_icon_set_tooltip_text(tray_icon, volchar);
-
 }
