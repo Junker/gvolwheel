@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Alsa backend */
+#undef BACKEND_ALSA
+
 /* always defined to indicate that i18n is enabled */
 #undef ENABLE_NLS
 

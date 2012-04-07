@@ -96,10 +96,9 @@ int main (int argc, char *argv[])
 	g_option_context_free(context);
 
 	
-	mixer_fd = open (device, R_OK+W_OK, 0);
-  	if (mixer_fd < 0)
-    	g_printf (_("Error opening mixer device %s\n"),device), exit (1);
 
+	if (!vol_init()) g_printf (_("Error opening mixer device %s\n"), device), exit (1);
+	
 	strcpy(opt_mixer, "gnome-alsamixer");
 	opt_channel = OPT_CHANNEL_MASTER;
 	opt_incr = 3;
@@ -109,17 +108,11 @@ int main (int argc, char *argv[])
 	load_config ();
 	tray_icon = create_tray_icon();
 
-  g_timeout_add (1000, (GSourceFunc) on_timer, NULL); //For update icon, if volume changed from other app
-
-/*	GIOChannel* pChannel = g_io_channel_unix_new(mixer_fd);
-	g_assert(pChannel);
-
-	g_io_add_watch(pChannel, G_IO_IN, read_callback, NULL);
-*/
+	g_timeout_add (1000, (GSourceFunc) on_timer, NULL); //For update icon, if volume changed from other app
 	
 	gtk_main ();
 
-	close(mixer_fd);
+//	close(mixer_fd);
 	return 0;
 }
 

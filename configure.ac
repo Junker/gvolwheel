@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(gvolwheel, 0.9, http://gvolwheel.sourceforge.net/, , http://gvolwheel.sourceforge.net/)
+AC_INIT(gvolwheel, 1.0, http://gvolwheel.sourceforge.net/, , http://gvolwheel.sourceforge.net/)
 
 AC_SUBST(PACKAGE_DATA_DIR)
 
@@ -33,7 +33,21 @@ IT_PROG_INTLTOOL([0.35.0])
 
 AM_PROG_LIBTOOL
 
+AC_ARG_ENABLE([oss],
+  [  --disable-oss    disable OSS],
+  [oss=${enableval}],
+  [oss=no])
+  
+AS_IF([test "x$oss" = "xno"], 
+[
+  PKG_CHECK_MODULES(ALSA,alsa)
+  AC_SUBST(ALSA_CFLAGS)
+  AC_SUBST(ALSA_LIBS)  
+  AC_DEFINE([BACKEND_ALSA], 1, [Alsa backend])
+]
+)
 
+AM_CONDITIONAL(BACKEND_ALSA, test "$oss" = "no")
 
 PKG_CHECK_MODULES(GTK,gtk+-3.0)
 
