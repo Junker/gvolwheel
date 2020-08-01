@@ -53,6 +53,7 @@ autom4te.cache
 /missing
 /mkinstalldirs
 /libtool
+/src/gvolwheel
 
 #-----------------------------------------------------------------------
 # /po/
