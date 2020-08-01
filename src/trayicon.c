@@ -31,6 +31,8 @@ const char *tray_image_stocks[] = {
 	 "audio-volume-high"
  	 };
 
+GtkStatusIcon *tray_icon;
+GdkPixbuf *tray_pixbufs[4];
 
 GtkStatusIcon *create_tray_icon()
 {
