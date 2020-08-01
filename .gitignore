@@ -1,13 +1,33 @@
+#-----------------------------------------------------------------------
+# common
+#-----------------------------------------------------------------------
+*.[ao]
+*.la
+*.lo
+*.so
+*.dll
+*.exe
+*.pyc
+deps.mak
+.deps/
+.libs/
 Makefile
 Makefile.in
+Makefile.in.in
+cscope.out
+cscope.files
+.dirstamp
+autom4te.cache
+
+
+#-----------------------------------------------------------------------
+# / (root)
+#-----------------------------------------------------------------------
 /ar-lib
 /mdate-sh
 /py-compile
 /test-driver
 /ylwrap
-.deps/
-.dirstamp
-autom4te.cache
 /autoscan.log
 /autoscan-*.log
 /aclocal.m4
@@ -28,18 +48,11 @@ autom4te.cache
 /texinfo.tex
 /COPYING
 /INSTALL
-m4/libtool.m4
-m4/ltoptions.m4
-m4/ltsugar.m4
-m4/ltversion.m4
-m4/lt~obsolete.m4
-/libtool
 /intltool
 /intltool-*
 /missing
 /mkinstalldirs
-/src/Makefile
-/src/Makefile.in
+/libtool
 
 #-----------------------------------------------------------------------
 # /po/
@@ -49,9 +62,6 @@ m4/lt~obsolete.m4
 /po/*.header
 /po/.intltool-merge-cache
 /po/LINGUAS
-/po/Makefile
-/po/Makefile.in
-/po/Makefile.in.in
 /po/Makevars
 /po/*.mo
 /po/*.pot
