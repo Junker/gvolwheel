@@ -2,17 +2,17 @@
 /*
  * main.c
  * Copyright (C) Dmitry Kosenkov 2011 <junker@front.ru>
- * 
+ *
  * main.c is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * main.c is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
- 
+
 #include <config.h>
 
 #include <gtk/gtk.h>
@@ -60,7 +60,7 @@
 #include "callbacks.h"
 #include "volume.h"
 
-static gchar *device = NULL; 
+static gchar *device = NULL;
 static GOptionEntry entries[] =
 {
 #ifdef BACKEND_ALSA
@@ -84,7 +84,7 @@ int main (int argc, char *argv[])
 
 //gtk3	gtk_set_locale ();
 	gtk_init (&argc, &argv);
-	
+
 	GError *error = NULL;
 	GOptionContext *context;
 
@@ -99,24 +99,22 @@ int main (int argc, char *argv[])
 	}
 	g_option_context_free(context);
 
-	
+
 
 	if (!vol_init(device)) g_printf (_("Error opening mixer device\n")), exit (1);
-	
+
 	strcpy(opt_mixer, "gnome-alsamixer");
 	opt_channel = OPT_CHANNEL_MASTER;
 	opt_incr = 3;
 	opt_gnome_icons = FALSE;
-	opt_show_tooltip = FALSE; 
-	
+	opt_show_tooltip = FALSE;
+
 	load_config ();
 	tray_icon = create_tray_icon();
 
 	g_timeout_add (1000, (GSourceFunc) on_timer, NULL); //For update icon, if volume changed from other app
-	
+
 	gtk_main ();
 
 	return 0;
 }
-
-

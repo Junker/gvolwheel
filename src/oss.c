@@ -23,7 +23,7 @@
 
 #include "oss.h"
 
-static char *default_device = "/dev/mixer"; 
+static char *default_device = "/dev/mixer";
 
 int mixer_fd;
 
@@ -39,7 +39,7 @@ int vol_backend_get(int mixer)
 {
 	if (mixer == 0)
 		ioctl(mixer_fd, MIXER_READ(SOUND_MIXER_VOLUME), &vol);
-	else if (mixer == 1)	
+	else if (mixer == 1)
 		ioctl(mixer_fd, MIXER_READ(SOUND_MIXER_PCM), &vol);
 	return(vol.left);
 }
@@ -47,8 +47,8 @@ int vol_backend_get(int mixer)
 void vol_backend_set(int mixer, int value)
 {
 	vol.left=vol.right = value;
-	if (mixer == 0)	
+	if (mixer == 0)
 		ioctl(mixer_fd, MIXER_WRITE(SOUND_MIXER_VOLUME), &vol);
-	else if (mixer == 1)	
+	else if (mixer == 1)
 		ioctl(mixer_fd, MIXER_WRITE(SOUND_MIXER_PCM), &vol);
 }

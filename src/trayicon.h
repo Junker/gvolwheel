@@ -2,8 +2,8 @@
 #include <glib/gstdio.h>
 #include <glib/gi18n-lib.h>
 
-GtkStatusIcon *tray_icon; 
-GdkPixbuf *tray_pixbufs[4]; 
+GtkStatusIcon *tray_icon;
+GdkPixbuf *tray_pixbufs[4];
 
 GtkStatusIcon* create_tray_icon();
 gboolean tray_icon_recreate(gpointer data);

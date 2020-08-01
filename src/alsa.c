@@ -21,7 +21,7 @@
 
 #include "alsa.h"
 
-static char *default_device = "default"; 
+static char *default_device = "default";
 
 static snd_mixer_t * mixer_id = NULL;
 snd_mixer_selem_id_t *sid;
@@ -42,7 +42,7 @@ int vol_backend_init (char *device)
 	snd_mixer_selem_id_set_name(sid, "PCM");
 	elem = snd_mixer_find_selem(mixer_id, sid);
 	if (!elem) return 0;
-	
+
 	return 1;
 }
 
@@ -60,7 +60,7 @@ int vol_backend_get(int mixer)
 }
 
 void vol_backend_set(int mixer, int value)
-{	
+{
 	snd_mixer_selem_id_set_name(sid, mixer == 0 ? "Master" : "PCM");
 	snd_mixer_elem_t* elem = snd_mixer_find_selem(mixer_id, sid);
 
