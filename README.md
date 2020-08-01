@@ -1,7 +1,7 @@
 # GVolWheel
 GVolWheel is a Lightweight application which lets you control the audio volume. \
 GVolWheel is application which lets you control the volume easily through a tray icon you can scroll on. \
-Easily integrate with minimal desktops (Openbox,IceWM,XFCE etc). \
+Easily integrate with minimal desktops (Openbox,IceWM,XFCE etc).
 
 # Install:
 ```
