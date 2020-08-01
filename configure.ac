@@ -37,12 +37,12 @@ AC_ARG_ENABLE([oss],
   [  --enable-oss    enable OSS],
   [oss=${enableval}],
   [oss=no])
-  
-AS_IF([test "x$oss" = "xno"], 
+
+AS_IF([test "x$oss" = "xno"],
 [
   PKG_CHECK_MODULES(ALSA,alsa)
   AC_SUBST(ALSA_CFLAGS)
-  AC_SUBST(ALSA_LIBS)  
+  AC_SUBST(ALSA_LIBS)
   AC_DEFINE([BACKEND_ALSA], 1, [Alsa backend])
 ]
 )

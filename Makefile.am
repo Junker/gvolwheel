@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ## Created by Anjuta
 
-SUBDIRS = src po 
+SUBDIRS = src po
 
 gvolwheeldocdir = ${prefix}/doc/gvolwheel
 gvolwheeldoc_DATA = \
@@ -10,7 +10,7 @@ gvolwheeldoc_DATA = \
 	AUTHORS\
 	ChangeLog\
 	INSTALL\
-	NEWS 
+	NEWS
 
 EXTRA_DIST = $(gvolwheeldoc_DATA) \
 	$(intltool_DATA)\
@@ -32,6 +32,3 @@ dist-hook:
 			cp -p $$specfile $(distdir); \
 		fi \
 	done
-			
-
-
