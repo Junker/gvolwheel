@@ -68,13 +68,20 @@ void launch_mixer ()
 }
 
 
+static gboolean
+vol_window_close(GtkWidget *widget, GdkEvent *event, gpointer user_data)
+{
+	gtk_widget_destroy(widget);
+	vwin = NULL;
+	return (TRUE);
+}
 
 void vol_window_show ()
 {
-	if (!GTK_IS_WINDOW(vwin)) vwin = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
-	else
-	{
-		vol_window_close();
+	if (!GTK_IS_WINDOW(vwin)) {
+		vwin = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
+	} else {
+		vol_window_close(vwin, NULL, NULL);
 		return;
 	}
 
@@ -121,7 +128,3 @@ void vol_window_show ()
 
 }
 
-void vol_window_close()
-{
-	gtk_widget_destroy(GTK_WIDGET(vwin));
-}
