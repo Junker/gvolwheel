@@ -23,8 +23,6 @@ struct stereo_volume
 	unsigned char right;
 };
 
-struct stereo_volume vol;
-
 int vol_backend_init(char *device);
 void vol_backend_set(int mixer, int value);
 int vol_backend_get(int mixer);

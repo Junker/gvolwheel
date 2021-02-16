@@ -24,7 +24,7 @@
 #include "oss.h"
 
 static char *default_device = "/dev/mixer";
-
+struct stereo_volume vol;
 int mixer_fd;
 
 int vol_backend_init (char *device)
